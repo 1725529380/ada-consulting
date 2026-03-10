@@ -1,0 +1,45 @@
+{
+  "name": "ADA Consulting · Firmas Electrónicas",
+  "short_name": "ADA Consulting",
+  "description": "Firmas Electrónicas en Ecuador. Facturación SRI, contratos y más.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f0f4f8",
+  "theme_color": "#2d4a6b",
+  "orientation": "portrait",
+  "lang": "es",
+  "scope": "/",
+  "icons": [
+    {
+      "src": "ada_consulting1.JPG",
+      "sizes": "192x192",
+      "type": "image/jpeg",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "ada_consulting1.JPG",
+      "sizes": "512x512",
+      "type": "image/jpeg",
+      "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Ver Precios",
+      "short_name": "Precios",
+      "url": "/?screen=catalog",
+      "description": "Ver planes de firma electrónica"
+    },
+    {
+      "name": "Agendar Cita",
+      "short_name": "Cita",
+      "url": "/?screen=agenda",
+      "description": "Agendar cita con un asesor"
+    }
+  ],
+  "categories": [
+    "business",
+    "finance",
+    "productivity"
+  ]
+}

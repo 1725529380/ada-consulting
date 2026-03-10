@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="theme-color" content="#2d4a6b">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="ADA Consulting">
+<meta name="application-name" content="ADA Consulting">
+<meta name="description" content="Firmas Electrónicas en Ecuador - ADA Consulting">
+<link rel="manifest" href="manifest.json">
+<title>ADA Consulting · Firmas Electrónicas Ecuador</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f0f4f8;
+  --bg2: #e4ecf4;
+  --surface: #ffffff;
+  --surface2: #f5f8fb;
+  --border: #c2d0de;
+  --navy: #2d4a6b;
+  --accent: #2d5f8a;
+  --accent2: #1e3f5c;
+  --gold: #c9852a;
+  --gold2: #a86a1f;
+  --glow: rgba(45,95,138,0.08);
+  --text: #1a2e3f;
+  --muted: #6b8aa3;
+  --success: #00aa66;
+  --nav-h: 64px;
+}
+
+* { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+html, body { height:100%; overflow:hidden; font-family:'DM Sans',sans-serif; background:var(--bg); color:var(--text); }
+
+/* APP SHELL */
+.app { height:100dvh; display:flex; flex-direction:column; max-width:430px; margin:0 auto; position:relative; overflow:hidden; background:var(--bg); }
+.screen { flex:1; overflow-y:auto; overflow-x:hidden; display:none; flex-direction:column; padding-bottom:calc(var(--nav-h)+10px); scroll-behavior:smooth; }
+.screen.active { display:flex; }
+.screen::-webkit-scrollbar { display:none; }
+
+/* NAV */
+.nav { height:var(--nav-h); background:rgba(240,244,248,0.97); backdrop-filter:blur(20px); border-top:1px solid var(--border); display:flex; position:absolute; bottom:0; left:0; right:0; z-index:100; box-shadow:0 -2px 12px rgba(45,74,107,0.08); }
+.nav-btn { flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:3px; background:none; border:none; color:var(--muted); cursor:pointer; transition:all 0.2s; position:relative; font-family:'DM Sans',sans-serif; }
+.nav-btn.active { color:var(--navy); }
+.nav-btn .nav-icon { font-size:20px; line-height:1; transition:transform 0.2s; }
+.nav-btn.active .nav-icon { transform:scale(1.15); }
+.nav-btn span { font-size:10px; font-weight:500; }
+.nav-btn.active::before { content:''; position:absolute; top:0; left:20%; right:20%; height:2px; background:var(--navy); border-radius:0 0 4px 4px; }
+
+/* HOME */
+.home-hero { padding:24px 20px 16px; background:linear-gradient(180deg,var(--bg2),transparent); }
+.brand { display:flex; align-items:center; gap:12px; margin-bottom:20px; }
+.brand-logo { width:50px; height:50px; border-radius:14px; overflow:hidden; flex-shrink:0; box-shadow:0 4px 16px rgba(45,74,107,0.2); border:2px solid rgba(201,133,42,0.3); }
+.brand-logo img { width:100%; height:100%; object-fit:cover; }
+.brand-text h1 { font-family:'Syne',sans-serif; font-size:18px; font-weight:800; color:var(--navy); }
+.brand-text p { font-size:11px; color:var(--muted); }
+.hero-card { background:linear-gradient(135deg,var(--navy) 0%,var(--accent) 100%); border-radius:20px; padding:20px; margin-bottom:20px; position:relative; overflow:hidden; }
+.hero-card::after { content:'🔐'; position:absolute; right:-5px; bottom:-10px; font-size:80px; opacity:0.15; }
+.hero-card h2 { font-family:'Syne',sans-serif; font-size:20px; font-weight:700; color:#fff; margin-bottom:6px; }
+.hero-card p { font-size:13px; color:rgba(255,255,255,0.8); line-height:1.5; }
+.hero-cta { margin-top:14px; background:rgba(255,255,255,0.2); backdrop-filter:blur(10px); border:1px solid rgba(255,255,255,0.3); color:#fff; padding:10px 20px; border-radius:10px; font-size:13px; font-weight:600; cursor:pointer; font-family:'DM Sans',sans-serif; transition:all 0.2s; display:inline-block; }
+.hero-cta:hover { background:rgba(255,255,255,0.3); }
+.section-title { font-family:'Syne',sans-serif; font-size:11px; font-weight:700; color:var(--navy); letter-spacing:1px; text-transform:uppercase; padding:0 20px; margin-bottom:12px; }
+.stats-row { display:grid; grid-template-columns:1fr 1fr 1fr; gap:10px; padding:0 20px; margin-bottom:20px; }
+.stat-card { background:var(--surface); border:1px solid var(--border); border-radius:14px; padding:14px 10px; text-align:center; box-shadow:0 2px 10px rgba(45,74,107,0.06); }
+.stat-card .num { font-family:'Syne',sans-serif; font-size:20px; font-weight:800; color:var(--navy); }
+.stat-card .lbl { font-size:10px; color:var(--muted); margin-top:2px; }
+.quick-actions { display:grid; grid-template-columns:1fr 1fr; gap:10px; padding:0 20px 10px; }
+.qa-card { background:var(--surface); border:1.5px solid var(--border); border-radius:16px; padding:16px; cursor:pointer; transition:all 0.2s; text-align:left; box-shadow:0 2px 10px rgba(45,74,107,0.06); }
+.qa-card:hover { border-color:var(--navy); transform:translateY(-2px); }
+.qa-icon { font-size:26px; margin-bottom:8px; }
+.qa-title { font-family:'Syne',sans-serif; font-size:13px; font-weight:700; color:var(--text); }
+.qa-sub { font-size:11px; color:var(--muted); margin-top:3px; }
+
+/* CATALOG */
+.catalog-header { padding:24px 20px 12px; }
+.catalog-header h2 { font-family:'Syne',sans-serif; font-size:22px; font-weight:800; color:var(--text); margin-bottom:4px; }
+.catalog-header p { font-size:13px; color:var(--muted); }
+.catalog-intro { margin:0 16px 16px; background:linear-gradient(135deg,rgba(45,95,138,0.08),rgba(201,133,42,0.05)); border:1px solid rgba(45,74,107,0.2); border-radius:14px; padding:14px 16px; display:flex; align-items:center; gap:12px; }
+.ci-icon { font-size:26px; flex-shrink:0; }
+.ci-title { font-family:'Syne',sans-serif; font-size:13px; font-weight:700; color:var(--navy); }
+.ci-sub { font-size:11px; color:var(--muted); margin-top:2px; }
+.plans-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; padding:0 16px; margin-bottom:16px; }
+.plan-card { background:var(--surface); border:1.5px solid var(--border); border-radius:16px; padding:16px 14px 14px; cursor:pointer; transition:all 0.2s; position:relative; box-shadow:0 2px 10px rgba(45,74,107,0.06); display:flex; flex-direction:column; align-items:flex-start; }
+.plan-card:hover { transform:translateY(-2px); border-color:var(--navy); box-shadow:0 6px 20px rgba(45,74,107,0.15); }
+.plan-card:active { transform:scale(0.97); }
+.plan-card.popular { border-color:var(--accent); background:rgba(45,95,138,0.04); }
+.plan-card.featured { border-color:var(--navy); background:rgba(45,74,107,0.05); }
+.plan-card.best { border-color:var(--gold); background:rgba(201,133,42,0.05); }
+.plan-tag { font-family:'Syne',sans-serif; font-size:9px; font-weight:700; color:var(--accent); letter-spacing:0.4px; text-transform:uppercase; margin-bottom:4px; background:rgba(45,95,138,0.1); padding:2px 8px; border-radius:20px; }
+.plan-card.best .plan-tag { color:var(--gold); background:rgba(201,133,42,0.1); }
+.plan-card.best .plan-price { color:var(--gold); }
+.plan-duration { font-family:'Syne',sans-serif; font-size:15px; font-weight:800; color:var(--text); margin-top:2px; }
+.plan-price { font-family:'Syne',sans-serif; font-size:26px; font-weight:800; color:var(--accent); line-height:1.1; margin-top:4px; }
+.plan-iva { font-size:11px; color:var(--muted); margin-top:2px; }
+.plan-arrow { position:absolute; right:12px; bottom:12px; font-size:22px; font-weight:700; color:var(--accent); opacity:0.4; }
+.features-box { margin:0 16px 20px; background:var(--surface); border:1px solid var(--border); border-radius:16px; padding:16px; box-shadow:0 2px 10px rgba(45,74,107,0.05); }
+.fb-title { font-family:'Syne',sans-serif; font-size:11px; font-weight:700; color:var(--muted); text-transform:uppercase; letter-spacing:0.8px; margin-bottom:12px; }
+.fb-row { display:flex; align-items:center; gap:8px; font-size:13px; color:var(--text); padding:6px 0; border-bottom:1px solid var(--bg2); }
+.fb-row:last-child { border-bottom:none; }
+.fb-check { color:var(--gold); font-weight:700; font-size:14px; }
+
+/* MODAL */
+.modal-overlay { position:fixed; inset:0; background:rgba(30,63,92,0.55); backdrop-filter:blur(6px); display:none; align-items:flex-end; justify-content:center; z-index:999; }
+.modal-overlay.open { display:flex; }
+.modal-box { background:var(--surface); border-radius:24px 24px 0 0; padding:28px 24px 36px; width:100%; max-width:430px; text-align:center; animation:slideUp 0.3s ease; position:relative; }
+@keyframes slideUp { from{transform:translateY(100%);opacity:0;} to{transform:translateY(0);opacity:1;} }
+.modal-close { position:absolute; top:16px; right:16px; background:var(--bg2); border:none; width:32px; height:32px; border-radius:50%; color:var(--muted); font-size:14px; cursor:pointer; display:flex; align-items:center; justify-content:center; }
+.modal-logo { width:64px; height:64px; border-radius:16px; overflow:hidden; margin:0 auto 12px; border:2px solid rgba(201,133,42,0.3); box-shadow:0 4px 16px rgba(45,74,107,0.15); }
+.modal-logo img { width:100%; height:100%; object-fit:cover; }
+.modal-title { font-family:'Syne',sans-serif; font-size:18px; font-weight:800; color:var(--text); margin-bottom:4px; }
+.modal-price { font-family:'Syne',sans-serif; font-size:42px; font-weight:800; color:var(--navy); line-height:1; }
+.modal-iva { font-size:13px; color:var(--muted); margin:4px 0 14px; }
+.modal-desc { font-size:13px; color:var(--muted); line-height:1.6; margin-bottom:20px; background:var(--bg2); border-radius:12px; padding:12px 14px; text-align:left; }
+.modal-wa-btn { display:flex; align-items:center; justify-content:center; gap:10px; background:linear-gradient(135deg,#128c4a,#25d366); color:#fff; text-decoration:none; padding:15px 20px; border-radius:14px; font-family:'Syne',sans-serif; font-size:14px; font-weight:700; box-shadow:0 4px 16px rgba(37,211,102,0.35); transition:all 0.2s; margin-bottom:10px; width:100%; }
+.modal-wa-btn:hover { transform:translateY(-1px); filter:brightness(1.05); }
+.modal-cancel { width:100%; padding:12px; background:var(--bg2); border:none; border-radius:12px; color:var(--muted); font-family:'DM Sans',sans-serif; font-size:14px; cursor:pointer; }
+
+/* CHAT */
+.chat-header { padding:16px 20px 14px; background:var(--surface); border-bottom:1px solid var(--border); display:flex; align-items:center; gap:12px; flex-shrink:0; box-shadow:0 2px 8px rgba(45,74,107,0.06); }
+.chat-av { width:42px; height:42px; border-radius:12px; overflow:hidden; border:2px solid rgba(201,133,42,0.25); box-shadow:0 0 12px rgba(45,74,107,0.12); flex-shrink:0; }
+.chat-av img { width:100%; height:100%; object-fit:cover; }
+.chat-info h3 { font-family:'Syne',sans-serif; font-size:15px; font-weight:700; color:var(--text); }
+.chat-info p { font-size:11px; color:var(--success); display:flex; align-items:center; gap:4px; }
+.online-dot { width:6px; height:6px; background:var(--success); border-radius:50%; animation:pulse 2s infinite; }
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
+.chat-messages { flex:1; overflow-y:auto; padding:16px 14px; display:flex; flex-direction:column; gap:12px; }
+.chat-messages::-webkit-scrollbar { display:none; }
+.msg { display:flex; gap:8px; animation:fadeUp 0.3s ease; }
+.msg.user { flex-direction:row-reverse; }
+@keyframes fadeUp { from{opacity:0;transform:translateY(6px);} to{opacity:1;transform:translateY(0);} }
+.msg-av { width:30px; height:30px; border-radius:9px; overflow:hidden; flex-shrink:0; margin-top:2px; border:1px solid var(--border); }
+.msg-av img { width:100%; height:100%; object-fit:cover; }
+.msg.user .msg-av { background:var(--surface2); }
+.bubble { max-width:76%; padding:10px 14px; border-radius:16px; font-size:13.5px; line-height:1.55; }
+.msg.bot .bubble { background:#e8f0fe; border:1px solid var(--border); border-top-left-radius:4px; color:var(--text); }
+.msg.user .bubble { background:linear-gradient(135deg,var(--accent2),var(--accent)); border-top-right-radius:4px; color:#fff; }
+.chips { display:flex; flex-wrap:wrap; gap:6px; padding-left:38px; animation:fadeUp 0.35s ease 0.1s both; }
+.chip { background:var(--surface); border:1px solid var(--border); color:var(--accent); font-size:12px; padding:6px 12px; border-radius:20px; cursor:pointer; transition:all 0.15s; font-family:'DM Sans',sans-serif; }
+.chip:hover { background:var(--glow); border-color:var(--navy); }
+.typing-ind { display:flex; gap:8px; align-items:center; }
+.typing-bubbl { background:#e8f0fe; border:1px solid var(--border); border-radius:16px; border-top-left-radius:4px; padding:12px 16px; display:flex; gap:4px; align-items:center; }
+.typing-bubbl span { width:5px; height:5px; background:var(--muted); border-radius:50%; animation:bounce 1.1s infinite; }
+.typing-bubbl span:nth-child(2){animation-delay:.18s} .typing-bubbl span:nth-child(3){animation-delay:.36s}
+@keyframes bounce { 0%,60%,100%{transform:translateY(0);opacity:.4} 30%{transform:translateY(-5px);opacity:1} }
+.chat-input-wrap { padding:10px 12px; background:var(--surface); border-top:1px solid var(--border); display:flex; gap:8px; align-items:center; flex-shrink:0; margin-bottom:var(--nav-h); }
+.chat-input { flex:1; background:var(--surface2); border:1px solid var(--border); border-radius:12px; padding:10px 14px; color:var(--text); font-family:'DM Sans',sans-serif; font-size:14px; outline:none; transition:border-color 0.2s; }
+.chat-input::placeholder { color:var(--muted); }
+.chat-input:focus { border-color:rgba(45,95,138,0.4); }
+.send-btn { width:40px; height:40px; background:linear-gradient(135deg,var(--accent2),var(--accent)); border:none; border-radius:11px; color:#fff; cursor:pointer; display:flex; align-items:center; justify-content:center; box-shadow:0 4px 14px rgba(45,95,138,0.3); transition:all 0.2s; flex-shrink:0; }
+.send-btn:hover { transform:scale(1.05); }
+.send-btn:disabled { opacity:0.5; transform:none; cursor:not-allowed; }
+
+/* CALCULATOR */
+.calc-header { padding:24px 20px 12px; }
+.calc-header h2 { font-family:'Syne',sans-serif; font-size:22px; font-weight:800; color:var(--text); margin-bottom:4px; }
+.calc-header p { font-size:13px; color:var(--muted); }
+.calc-card { margin:0 16px 14px; background:var(--surface); border:1px solid var(--border); border-radius:20px; padding:20px; box-shadow:0 2px 12px rgba(45,74,107,0.06); }
+.calc-card h3 { font-family:'Syne',sans-serif; font-size:11px; font-weight:700; color:var(--muted); text-transform:uppercase; letter-spacing:0.8px; margin-bottom:16px; }
+.field { margin-bottom:14px; }
+.field label { display:block; font-size:12px; color:var(--muted); margin-bottom:6px; font-weight:500; }
+.field input, .field select { width:100%; background:var(--surface2); border:1px solid var(--border); border-radius:10px; padding:10px 14px; color:var(--text); font-family:'DM Sans',sans-serif; font-size:14px; outline:none; transition:border-color 0.2s; -webkit-appearance:none; }
+.field input:focus, .field select:focus { border-color:rgba(45,95,138,0.4); }
+.field select option { background:var(--surface); }
+.calc-btn { width:100%; padding:13px; background:linear-gradient(135deg,var(--accent2),var(--accent)); border:none; border-radius:12px; color:#fff; font-family:'Syne',sans-serif; font-size:14px; font-weight:700; cursor:pointer; transition:all 0.2s; box-shadow:0 4px 16px rgba(45,95,138,0.25); margin-top:4px; }
+.calc-btn:hover { transform:translateY(-1px); filter:brightness(1.08); }
+.result-card { margin:0 16px 14px; border-radius:20px; padding:20px; display:none; animation:fadeUp 0.4s ease; }
+.result-card.show { display:block; }
+.result-card.savings { background:linear-gradient(135deg,rgba(201,133,42,0.08),rgba(45,95,138,0.06)); border:1px solid rgba(201,133,42,0.2); }
+.result-title { font-family:'Syne',sans-serif; font-size:11px; font-weight:700; color:var(--gold); text-transform:uppercase; letter-spacing:0.8px; margin-bottom:16px; }
+.result-row { display:flex; justify-content:space-between; padding:9px 0; border-bottom:1px solid rgba(0,0,0,0.05); font-size:13px; }
+.result-row:last-child { border-bottom:none; }
+.result-row .rlabel { color:var(--muted); }
+.result-row .rval { font-weight:600; }
+.result-row .rval.green { color:var(--success); }
+.result-row .rval.red { color:#e0003a; }
+.result-row .rval.blue { color:var(--accent); }
+.big-saving { text-align:center; padding:16px 0 8px; }
+.big-saving .amount { font-family:'Syne',sans-serif; font-size:42px; font-weight:800; color:var(--gold); line-height:1; }
+.big-saving .label { font-size:13px; color:var(--muted); margin-top:4px; }
+
+/* AGENDA */
+.agenda-header { padding:24px 20px 12px; }
+.agenda-header h2 { font-family:'Syne',sans-serif; font-size:22px; font-weight:800; color:var(--text); margin-bottom:4px; }
+.agenda-header p { font-size:13px; color:var(--muted); }
+.agenda-form { margin:0 16px; background:var(--surface); border:1px solid var(--border); border-radius:20px; padding:20px; box-shadow:0 2px 12px rgba(45,74,107,0.06); }
+.form-row { margin-bottom:14px; }
+.form-row label { display:block; font-size:12px; color:var(--muted); margin-bottom:6px; font-weight:500; }
+.form-row input, .form-row select, .form-row textarea { width:100%; background:var(--surface2); border:1px solid var(--border); border-radius:10px; padding:11px 14px; color:var(--text); font-family:'DM Sans',sans-serif; font-size:14px; outline:none; transition:border-color 0.2s; -webkit-appearance:none; }
+.form-row textarea { resize:none; height:80px; line-height:1.5; }
+.form-row input:focus, .form-row select:focus, .form-row textarea:focus { border-color:rgba(45,95,138,0.4); }
+.horarios { display:grid; grid-template-columns:1fr 1fr 1fr; gap:8px; margin-top:6px; }
+.horario-btn { background:var(--surface2); border:1px solid var(--border); color:var(--text); padding:9px 6px; border-radius:10px; font-size:12px; cursor:pointer; text-align:center; transition:all 0.15s; font-family:'DM Sans',sans-serif; }
+.horario-btn.selected { background:var(--glow); border-color:var(--navy); color:var(--navy); }
+.submit-btn { width:100%; padding:14px; background:linear-gradient(135deg,var(--accent2),var(--accent)); border:none; border-radius:12px; color:#fff; font-family:'Syne',sans-serif; font-size:15px; font-weight:700; cursor:pointer; transition:all 0.2s; box-shadow:0 4px 20px rgba(45,95,138,0.3); margin-top:6px; }
+.submit-btn:hover { transform:translateY(-1px); filter:brightness(1.08); }
+.success-msg { margin:0 16px; background:linear-gradient(135deg,rgba(201,133,42,0.1),rgba(45,95,138,0.05)); border:1px solid rgba(201,133,42,0.25); border-radius:20px; padding:28px 20px; text-align:center; display:none; animation:fadeUp 0.4s ease; }
+.success-msg.show { display:block; }
+.success-icon { font-size:52px; margin-bottom:12px; }
+.success-msg h3 { font-family:'Syne',sans-serif; font-size:20px; font-weight:800; margin-bottom:8px; }
+.success-msg p { font-size:13px; color:var(--muted); line-height:1.6; }
+</style>
+</head>
+<body>
+<div class="app">
+
+  <!-- HOME -->
+  <div class="screen active" id="s-home">
+    <div class="home-hero">
+      <div class="brand">
+        <div class="brand-logo"><img src="data:image/jpeg;base64,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';
+let chatHistory = [];
+let chatBusy = false;
+
+const KB = {
+  precios: {keys:['precio','costo','cuánto','cuanto','vale','valor'],reply:'💰 Nuestros planes son:\n\n• 7 días: $9.50 + IVA\n• 30 días: $12.00 + IVA\n• 1 año: $20.00 + IVA\n• 2 años: $30.00 + IVA\n• 3 años: $45.00 + IVA\n• 4 años: $60.00 + IVA\n• 5 años: $70.00 + IVA\n\n¿Cuál te interesa?',chips:['Ver catálogo','Para el SRI','Quiero una cita']},
+  sri: {keys:['sri','factura','facturación','facturacion','tributaria','ruc'],reply:'🧾 Para facturación electrónica del SRI cualquier plan funciona. El más popular es el de <b>1 año a $20 + IVA</b>. Lista en 24-48 horas. ¿Cuántas personas la necesitan?',chips:['Solo yo','2 a 5 personas','Más de 5','Quiero una cita']},
+  proceso: {keys:['proceso','cómo','como','pasos','requisito','documento','cédula','cedula'],reply:'📋 El proceso es simple:\n\n1️⃣ Eliges tu plan\n2️⃣ Nos envías tu cédula o RUC\n3️⃣ Validamos tu identidad\n4️⃣ En 24-48h tienes tu firma\n\n¿Quieres empezar?',chips:['Quiero empezar','Ver precios','Quiero una cita']},
+  tiempo: {keys:['tiempo','demora','rápido','rapido','horas','días','dias','urgente'],reply:'⏱️ La entrega es en <b>24-48 horas hábiles</b>. ¿Necesitas algo urgente?',chips:['Sí, es urgente','Ver planes','Quiero una cita']},
+  descuento: {keys:['descuento','empresa','empleados','grupo','varios'],reply:'🎁 Para empresas con varios empleados tenemos precios especiales. Escríbenos directamente para cotizar.',chips:['Quiero una cita','Ver precios']},
+  cita: {keys:['cita','agendar','agenda','asesor','contactar','hablar','whatsapp','wasap','reunión','reunion'],reply:'📅 ¡Con gusto! Toca el botón para escribirnos directo por WhatsApp 👇',chips:[],wa:true},
+  saludo: {keys:['hola','buenas','buenos','saludos','hi','hey'],reply:'¡Hola! 👋 Bienvenido a <b>ADA Consulting</b>. Soy FirmaBot, tu asistente de firmas electrónicas en Ecuador. ¿En qué puedo ayudarte?',chips:['¿Cuánto cuesta?','Para el SRI','¿Cómo funciona?','Quiero una cita']},
+  gracias: {keys:['gracias','perfecto','genial','excelente','ok','listo'],reply:'¡Con mucho gusto! 😊 Si necesitas algo más, aquí estoy.',chips:['Ver precios','Agendar cita']},
+};
+
+function getBotReply(text) {
+  const t=text.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
+  for(const [k,d] of Object.entries(KB)) {
+    if(d.keys.some(kw=>t.includes(kw))) return d;
+  }
+  return {reply:'🤔 Para darte la mejor atención, ¿quieres hablar con un asesor o prefieres que te cuente sobre nuestros planes?',chips:['Ver precios','¿Cómo funciona?','Quiero una cita'],wa:false};
+}
+
+function addBotMsg(text, chips=[]) {
+  const area=document.getElementById('chatMessages');
+  const div=document.createElement('div');
+  div.className='msg bot';
+  div.innerHTML=`<div class="msg-av"><img src="${LOGO_SRC}" /></div><div class="bubble">${text.replace(/\n/g,'<br>')}</div>`;
+  area.appendChild(div);
+  if(chips.length) {
+    const cr=document.createElement('div');
+    cr.className='chips';
+    chips.forEach(c=>{
+      const b=document.createElement('button');
+      b.className='chip'; b.textContent=c;
+      b.onclick=()=>{
+        const cl=c.toLowerCase();
+        if(cl==='quiero una cita'||cl==='agendar cita'||cl==='agendar ahora') {
+          window.open('https://wa.me/593963305160?text='+encodeURIComponent('Hola! Quiero agendar una cita para mi firma electrónica 🔏'),'_blank');
+        } else if(cl==='ver catálogo'||cl==='ver planes'||cl==='ver precios') {
+          goTo('s-catalog');
+        } else {
+          document.getElementById('chatInput').value=c; sendChat();
+        }
+      };
+      cr.appendChild(b);
+    });
+    area.appendChild(cr);
+  }
+  area.scrollTop=area.scrollHeight;
+}
+
+function addUserMsg(text) {
+  const area=document.getElementById('chatMessages');
+  document.querySelectorAll('.chips').forEach(c=>c.remove());
+  const div=document.createElement('div');
+  div.className='msg user';
+  div.innerHTML=`<div class="msg-av" style="background:var(--surface2)"><img src="${LOGO_SRC}" style="opacity:0.3"/></div><div class="bubble">${text}</div>`;
+  area.appendChild(div);
+  area.scrollTop=area.scrollHeight;
+}
+
+function addWhatsAppBtn() {
+  const area=document.getElementById('chatMessages');
+  if(document.getElementById('waBtnMsg')) return;
+  const div=document.createElement('div');
+  div.id='waBtnMsg'; div.style.cssText='padding-left:38px;animation:fadeUp 0.3s ease;';
+  div.innerHTML=`<a href="https://wa.me/593963305160?text=${encodeURIComponent('Hola! Quiero agendar una cita para mi firma electrónica 🔏')}" target="_blank" style="display:inline-flex;align-items:center;gap:10px;background:linear-gradient(135deg,#128c4a,#25d366);color:#fff;padding:12px 18px;border-radius:14px;text-decoration:none;font-family:'Syne',sans-serif;font-size:13px;font-weight:700;box-shadow:0 4px 16px rgba(37,211,102,0.35);">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.119.554 4.107 1.523 5.83L.057 23.5l5.83-1.466A11.945 11.945 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 01-5.006-1.371l-.36-.214-3.732.979.996-3.638-.234-.374A9.818 9.818 0 012.182 12C2.182 6.58 6.58 2.182 12 2.182S21.818 6.58 21.818 12 17.42 21.818 12 21.818z"/></svg>
+    Agendar cita por WhatsApp
+  </a>`;
+  area.appendChild(div);
+  area.scrollTop=area.scrollHeight;
+}
+
+function showTyping() {
+  const area=document.getElementById('chatMessages');
+  const div=document.createElement('div');
+  div.className='msg bot'; div.id='typingInd';
+  div.innerHTML=`<div class="msg-av"><img src="${LOGO_SRC}" /></div><div class="typing-bubbl"><span></span><span></span><span></span></div>`;
+  area.appendChild(div); area.scrollTop=area.scrollHeight;
+}
+
+function hideTyping() { document.getElementById('typingInd')?.remove(); }
+
+function initChat() {
+  addBotMsg('¡Hola! 👋 Bienvenido a <b>ADA Consulting</b>. Soy FirmaBot. Estoy aquí para ayudarte con firmas electrónicas en Ecuador. ¿En qué puedo ayudarte?',
+    ['¿Cuánto cuesta?','Para el SRI','¿Cómo funciona?','Quiero una cita']);
+}
+
+async function sendChat() {
+  const inp=document.getElementById('chatInput');
+  const text=inp.value.trim();
+  if(!text||chatBusy) return;
+  inp.value=''; chatBusy=true;
+  document.getElementById('chatSendBtn').disabled=true;
+  addUserMsg(text);
+  showTyping();
+  await new Promise(r=>setTimeout(r,800+Math.random()*500));
+  hideTyping();
+  const result=getBotReply(text);
+  addBotMsg(result.reply||result, result.chips||[]);
+  if(result.wa) setTimeout(()=>addWhatsAppBtn(),200);
+
+  // Notificar WhatsApp solo si pide cita
+  const lw=text.toLowerCase();
+  if(lw.includes('cita')||lw.includes('agendar')||lw.includes('agenda')) notifyChat(text);
+
+  chatBusy=false;
+  document.getElementById('chatSendBtn').disabled=false;
+  inp.focus();
+}
+
+document.getElementById('chatInput').addEventListener('keydown',e=>{if(e.key==='Enter')sendChat();});
+
+// CALCULATOR
+function calcSavings() {
+  const docs=parseFloat(document.getElementById('c-docs').value)||0;
+  const people=parseFloat(document.getElementById('c-people').value)||1;
+  const printCost=parseFloat(document.getElementById('c-print').value)||0.05;
+  const timeMin=parseFloat(document.getElementById('c-time').value)||10;
+  const hourRate=parseFloat(document.getElementById('c-salary').value)||4;
+  const paperYear=docs*people*printCost*12;
+  const timeYear=(docs*people*(timeMin/60)*hourRate)*12;
+  const currentTotal=paperYear+timeYear;
+  const digitalCost=people*20;
+  const saving=currentTotal-digitalCost;
+  document.getElementById('r-paper').textContent='$'+paperYear.toFixed(0);
+  document.getElementById('r-time').textContent='$'+timeYear.toFixed(0);
+  document.getElementById('r-current').textContent='$'+currentTotal.toFixed(0);
+  document.getElementById('r-digital').textContent='$'+digitalCost.toFixed(0);
+  document.getElementById('r-saving').textContent='$'+(saving>0?saving.toFixed(0):'0');
+  document.getElementById('r-total').textContent='$'+(saving>0?saving.toFixed(0):'0');
+  const res=document.getElementById('calcResult');
+  res.classList.add('show');
+  res.scrollIntoView({behavior:'smooth',block:'nearest'});
+  notifyCalculadora({docs,people,saving:saving>0?saving.toFixed(0):'0'});
+}
+
+// AGENDA
+function selectHorario(btn) {
+  document.querySelectorAll('.horario-btn').forEach(b=>b.classList.remove('selected'));
+  btn.classList.add('selected');
+}
+
+function submitAgenda() {
+  const name=document.getElementById('f-name').value.trim();
+  const contact=document.getElementById('f-contact').value.trim();
+  const type=document.getElementById('f-type').value;
+  if(!name||!contact||!type) { alert('Por favor completa nombre, contacto y tipo de firma.'); return; }
+  document.getElementById('agendaForm').style.display='none';
+  document.getElementById('agendaSuccess').classList.add('show');
+  document.getElementById('s-agenda').scrollTop=0;
+  const hora=document.querySelector('.horario-btn.selected')?.textContent||'No especificado';
+  const use=document.getElementById('f-use').value;
+  const notes=document.getElementById('f-notes').value.trim();
+  notifyAgenda({name,contact,type,use,notes,hora});
+}
+
+// WHATSAPP NOTIFICATIONS
+const WA_NUMBER='593963305160';
+function sendWhatsApp(msg) { window.open('https://wa.me/'+WA_NUMBER+'?text='+encodeURIComponent(msg),'_blank'); }
+
+function notifyAgenda(d) {
+  const msg=`🔔 *NUEVA CITA - ADA Consulting*\n━━━━━━━━━━━━━\n👤 *Nombre:* ${d.name}\n📱 *Contacto:* ${d.contact}\n🔏 *Plan:* ${d.type}\n📋 *Uso:* ${d.use||'No especificado'}\n🕐 *Horario:* ${d.hora}\n📝 *Notas:* ${d.notes||'Ninguna'}\n━━━━━━━━━━━━━\n📅 ${new Date().toLocaleString('es-EC')}`;
+  sendWhatsApp(msg);
+}
+
+function notifyCalculadora(d) {
+  const msg=`💰 *LEAD CALCULADORA - ADA Consulting*\n━━━━━━━━━━━━━\n📄 Docs/mes: ${d.docs} · Personas: ${d.people}\n💵 Ahorro estimado: $${d.saving}/año\n━━━━━━━━━━━━━\n📅 ${new Date().toLocaleString('es-EC')}`;
+  sendWhatsApp(msg);
+}
+
+function notifyChat(pregunta) {
+  const msg=`🤖 *CONSULTA FIRMABOT - ADA Consulting*\n━━━━━━━━━━━━━\n💬 "${pregunta}"\n📅 ${new Date().toLocaleString('es-EC')}`;
+  sendWhatsApp(msg);
+}
+</script>
+<script>
+if('serviceWorker' in navigator) {
+  window.addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));
+}
+</script>
+</body>
+</html>
